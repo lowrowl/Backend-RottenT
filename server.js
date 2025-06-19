@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json()); // para parsear application/json
 
 // Rutas
-const userRoutes = require('./routes/User.routes');
+const userRoutes = require('./routes/user.routes');
 const movieRoutes = require('./routes/movie.routes');
 const commentRoutes = require('./routes/comment.routes');
 
