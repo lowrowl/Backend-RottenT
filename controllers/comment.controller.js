@@ -3,10 +3,12 @@ const Movie = require('../models/Movie');
 
 exports.addComment = async (req, res) => {
   try {
+    console.log('REQ.BODY:', req.body);
+    console.log('REQ.USER:', req.user);
+
     const { movieId, content, rating } = req.body;
     const userId = req.user.id;
     const isCritic = req.user.role === 'critic';
-
 
     const comment = new Comment({
       userId,
@@ -39,9 +41,11 @@ exports.addComment = async (req, res) => {
 
     res.status(201).json(comment);
   } catch (error) {
+    console.error('ERROR EN ADDCOMMENT:', error);
     res.status(500).json({ message: 'Error al agregar comentario', error });
   }
 };
+
 
 exports.getCommentsByMovie = async (req, res) => {
   try {
