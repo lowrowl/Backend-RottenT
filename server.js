@@ -26,11 +26,6 @@ app.use('/api/movies', movieRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/tmdb', tmdbRoutes);
 
-// Ruta raíz de prueba
-app.get('/', (req, res) => {
-  res.send('API de RottenApp funcionando 🚀');
-});
-
 // Puerto
 const PORT = process.env.PORT || 5000;
 
