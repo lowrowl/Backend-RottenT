@@ -15,6 +15,7 @@ const app = express();
 // Middlewares
 app.use(cors());
 app.use(express.json()); // para parsear application/json
+app.use(express.urlencoded({ extended: true }));
 
 // Rutas
 const userRoutes = require('./routes/user.routes');
