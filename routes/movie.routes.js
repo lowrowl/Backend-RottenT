@@ -3,12 +3,14 @@ const router = express.Router();
 const movieController = require('../controllers/movie.controller');
 const auth = require('../middleware/auth');
 
-// Rutas protegidas
-router.post('/tmdb/:tmdbId', auth, movieController.addMovieByTMDbId); // más específica, va primero
-router.get('/', movieController.getAllMovies);
-router.post('/', auth, movieController.addMovie);
-router.get('/:id', movieController.getMovieById); // esta va al final
-router.get('/tmdb/:tmdbId', movieController.getMovieByTmdbId);
-router.get('/tmdb/:tmdbId', movieController.getOrAddMovieByTmdbId);
+// ───── Rutas TMDb ─────
+router.get('/tmdb/:tmdbId', movieController.getOrAddMovieByTmdbId); // <- ÚNICA y antes que '/:id'
+router.post('/tmdb/:tmdbId', auth, movieController.addMovieByTMDbId);
+
+// ───── CRUD local ─────
+router.get('/', movieController.getAllMovies);        // lista/filtra
+router.post('/', auth, movieController.addMovie);     // alta manual
+
+router.get('/:id', movieController.getMovieById);     // detalle por _id de Mongo
 
 module.exports = router;
