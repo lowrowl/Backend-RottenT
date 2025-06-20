@@ -88,6 +88,14 @@ const getProfile = async (req, res) => {
   res.json(user);
 };
 
+exports.removeFromWatchlist = async (req, res) => {
+  const { movieId } = req.body;
+  await User.findByIdAndUpdate(req.user.id, {
+    $pull: { watchlist: movieId }
+  });
+  res.json({ message: 'Película eliminada de Ver más tarde' });
+};
+
 module.exports = {
   register,
   login,
