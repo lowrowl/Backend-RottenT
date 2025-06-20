@@ -87,3 +87,12 @@ exports.getProfile = async (req, res) => {
     .select('-password');
   res.json(user);
 };
+
+module.exports = {
+  register,
+  login,
+  getMe,        //  ➜  /api/users/me        (token)
+  getProfile,   //  ➜  /api/users/profile   (token)  ← devuelve watchlist + myList
+  addToWatchlist,
+  addToMyList
+};

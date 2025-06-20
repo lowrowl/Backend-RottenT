@@ -1,15 +1,17 @@
 const express = require('express');
-const router = express.Router();
-const { register, login, getMe, getSeenlist, getWatchlist } = require('../controllers/user.controller');
-const auth = require('../middleware/auth');
+const router  = express.Router();
+const ctrl    = require('../controllers/user.controller');
+const auth    = require('../middleware/auth');
 
-// Registro y login
-router.post('/register', register);
-router.post('/login', login);
+/* auth público */
+router.post('/register', ctrl.register);
+router.post('/login',    ctrl.login);
 
-// 👤 Obtener usuario autenticado
-router.get('/profile', auth, getMe);
-router.get('/watchlist', auth, getWatchlist);
-router.get('/seenlist', auth, getSeenlist);
+/* auth protegido */
+router.get('/me',       auth, ctrl.getMe);         // sólo datos básicos
+router.get('/profile',  auth, ctrl.getProfile);    // + listas pobladas
+
+router.post('/watchlist', auth, ctrl.addToWatchlist); // body: { movieId }
+router.post('/mylist',    auth, ctrl.addToMyList);    // body: { movieId }
 
 module.exports = router;
