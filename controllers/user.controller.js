@@ -2,7 +2,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-exports.register = async (req, res) => {
+const register = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
 
@@ -26,7 +26,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -54,7 +54,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.getMe = async (req, res) => {
+const getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-passwordHash');
 
@@ -68,19 +68,19 @@ exports.getMe = async (req, res) => {
   }
 };
 
-exports.addToWatchlist = async (req, res) => {
+const addToWatchlist = async (req, res) => {
   const { movieId } = req.body;
   await User.findByIdAndUpdate(req.user.id, { $addToSet: { watchlist: movieId } });
   res.json({ message: 'Película agregada a Ver más tarde' });
 };
 
-exports.addToMyList = async (req, res) => {
+const addToMyList = async (req, res) => {
   const { movieId } = req.body;
   await User.findByIdAndUpdate(req.user.id, { $addToSet: { myList: movieId } });
   res.json({ message: 'Película agregada a Mi Lista' });
 };
 
-exports.getProfile = async (req, res) => {
+const getProfile = async (req, res) => {
   const user = await User.findById(req.user.id)
     .populate('watchlist')
     .populate('myList')
@@ -91,8 +91,8 @@ exports.getProfile = async (req, res) => {
 module.exports = {
   register,
   login,
-  getMe,        //  ➜  /api/users/me        (token)
-  getProfile,   //  ➜  /api/users/profile   (token)  ← devuelve watchlist + myList
+  getMe,
+  getProfile,
   addToWatchlist,
   addToMyList
 };
