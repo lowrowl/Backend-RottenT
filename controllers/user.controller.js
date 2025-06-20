@@ -88,7 +88,7 @@ const getProfile = async (req, res) => {
   res.json(user);
 };
 
-exports.removeFromWatchlist = async (req, res) => {
+const removeFromWatchlist = async (req, res) => {
   const { movieId } = req.body;
   await User.findByIdAndUpdate(req.user.id, {
     $pull: { watchlist: movieId }
@@ -100,11 +100,10 @@ module.exports = {
   register,
   login,
   getMe,
-  /* list handling */
   addToWatchlist,
   addToMyList,
   getWatchlist,
   getSeenlist,
-  /* full profile */
-  getProfile
+  getProfile,
+  removeFromWatchlist  // ✅ ← Agregado aquí
 };
