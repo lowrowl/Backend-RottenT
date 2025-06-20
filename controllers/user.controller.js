@@ -67,3 +67,23 @@ exports.getMe = async (req, res) => {
     res.status(500).json({ message: 'Error al obtener el perfil', error });
   }
 };
+
+exports.addToWatchlist = async (req, res) => {
+  const { movieId } = req.body;
+  await User.findByIdAndUpdate(req.user.id, { $addToSet: { watchlist: movieId } });
+  res.json({ message: 'Película agregada a Ver más tarde' });
+};
+
+exports.addToMyList = async (req, res) => {
+  const { movieId } = req.body;
+  await User.findByIdAndUpdate(req.user.id, { $addToSet: { myList: movieId } });
+  res.json({ message: 'Película agregada a Mi Lista' });
+};
+
+exports.getProfile = async (req, res) => {
+  const user = await User.findById(req.user.id)
+    .populate('watchlist')
+    .populate('myList')
+    .select('-password');
+  res.json(user);
+};

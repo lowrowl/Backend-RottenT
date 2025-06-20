@@ -21,7 +21,16 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: ['user', 'critic'],
     default: 'user'
-  }
+  },
+  watchlist: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Movie' 
+  }],
+  myList: [{ 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Movie' 
+  }],
+
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', UserSchema);
