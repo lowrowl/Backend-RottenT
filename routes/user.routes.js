@@ -18,5 +18,6 @@ router.post('/mylist',    auth, ctrl.addToMyList);
 router.get('/watchlist', auth, ctrl.getWatchlist);
 router.get('/seenlist',  auth, ctrl.getSeenlist);
 router.post('/watchlist/remove', auth, ctrl.removeFromWatchlist);
+router.post('/watchlist/to-mylist', auth, ctrl.moveToMyList);
 
 module.exports = router;

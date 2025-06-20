@@ -96,6 +96,22 @@ const removeFromWatchlist = async (req, res) => {
   res.json({ message: 'Película eliminada de Ver más tarde' });
 };
 
+const moveToMyList = async (req, res) => {
+  const { movieId } = req.body;
+
+  try {
+    await User.findByIdAndUpdate(req.user.id, {
+      $pull: { watchlist: movieId },        // 1. Eliminar de watchlist
+      $addToSet: { myList: movieId }        // 2. Agregar a mi lista
+    });
+
+    res.json({ message: 'Película movida a Mi Lista' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al mover película a Mi Lista', error });
+  }
+};
+
+
 module.exports = {
   register,
   login,
@@ -105,5 +121,6 @@ module.exports = {
   getWatchlist,
   getSeenlist,
   getProfile,
-  removeFromWatchlist  // ✅ ← Agregado aquí
+  removeFromWatchlist , // ✅ ← Agregado aquí
+  moveToMyList
 };
